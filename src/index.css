@@ -33,19 +33,41 @@ body {
 }
 
 /* =========================
-   NAVBAR MOBILE
+   NAVBAR — BASE MOBILE
+   Par défaut :
+   - fond bleu
+   - logo à gauche
+   - burger / croix à droite
+   - menu mobile fermé
 ========================= */
 
 .navbar {
   width: 100%;
   background-color: #bfd2ef;
+}
+
+/* Barre du haut */
+.navbar__top {
+  width: 100%;
+  height: 64px;
+  padding: 0 16px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
-  padding: 0 20px;
+
+  /* IMPORTANT :
+     pas de ligne par défaut */
+  border-bottom: none;
 }
 
+/* Ligne pointillée visible UNIQUEMENT
+   quand le menu mobile est ouvert */
+.navbar--open .navbar__top {
+  border-bottom: 1px dotted #3c2015;
+}
+
+/* Logo */
 .navbar__logo {
   display: inline-flex;
   align-items: center;
@@ -59,31 +81,120 @@ body {
   width: auto;
 }
 
+/* Bouton burger / croix */
+.navbar__burger {
+  background: none;
+  border: none;
+  color: #3c2015;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Menu desktop caché en mobile */
 .navbar__menu-container {
   display: none;
 }
 
-.navbar__burger {
-  background: none;
-  border: none;
-  color: #6f7fa0;
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-
 /* =========================
-   NAVBAR DESKTOP
+   MENU MOBILE
 ========================= */
 
-@media (min-width: 768px) {
+.navbar__mobile-menu {
+  display: none;
+  background-color: #f4edc6;
+  padding: 32px 20px;
+}
+
+/* Quand le menu est ouvert */
+.navbar__mobile-menu--open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Liens du menu mobile */
+.navbar__mobile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  text-decoration: none;
+  color: #3c2015;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+/* Espace entre les liens */
+.navbar__mobile-link + .navbar__mobile-link {
+  margin-top: 4px;
+}
+
+/* Flèche */
+.navbar__arrow {
+  font-size: 12px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   TABLETTE
+   Même logique que mobile,
+   juste un peu plus respirant
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar__top {
+    padding: 0 20px;
+  }
+
+  .navbar__logo img {
+    height: 44px;
+  }
+
+  .navbar__mobile-menu {
+    padding: 36px 20px;
+  }
+
+  .navbar__mobile-link {
+    font-size: 34px;
+  }
+}
+
+/* =========================
+   DESKTOP
+   - fond transparent
+   - menu rose visible
+   - burger caché
+   - menu mobile caché
+   - pas de ligne pointillée
+========================= */
+
+@media (min-width: 1024px) {
   .navbar {
     background-color: transparent;
-    justify-content: space-between;
-    align-items: flex-start;
+  }
+
+  .navbar__top {
+    width: 100%;
     height: auto;
     padding: 20px 20px 10px 40px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    border-bottom: none;
+  }
+
+  /* On neutralise complètement la ligne pointillée en desktop */
+  .navbar--open .navbar__top {
+    border-bottom: none;
   }
 
   .navbar__logo img {
@@ -91,10 +202,12 @@ body {
     width: auto;
   }
 
+  /* Menu desktop visible */
   .navbar__menu-container {
     display: inline-flex;
     align-items: center;
     gap: 20px;
+
     background-color: #fcc5df;
     padding: 7px 20px;
     border-radius: 999px;
@@ -106,8 +219,10 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+
     text-decoration: none;
     color: #3c2015;
+
     font-family: "Cormorant Garamond", serif;
     font-size: 18.24px;
     font-weight: 500;
@@ -115,24 +230,23 @@ body {
     white-space: nowrap;
   }
 
-  .navbar__arrow {
-    font-size: 12px;
-    line-height: 1;
-    transform: translateY(-1px);
+  /* Menu mobile caché */
+  .navbar__mobile-menu {
+    display: none !important;
   }
 
+  /* Burger caché */
   .navbar__burger {
     display: none;
   }
 }
 
 /* =========================
-   HERO
+   HERO — DESKTOP PAR DÉFAUT
 ========================= */
 
 .hero {
   padding: 50px 100px 100px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -146,7 +260,7 @@ body {
 
 /* TAG */
 .hero__tag {
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-size: 12.8px;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -165,8 +279,9 @@ body {
 
 /* PARAGRAPHE */
 .hero__description {
-  font-family: 'Public Sans', sans-serif;
+  font-family: "Public Sans", sans-serif;
   font-size: 12.8px;
+  line-height: 1.45;
   color: #3c2015;
   margin-bottom: 20px;
 }
@@ -190,22 +305,128 @@ body {
 }
 
 /* IMAGE */
+.hero__image {
+  flex: 0 0 auto;
+}
+
 .hero__image img {
+  display: block;
   width: 400px;
+  max-width: 100%;
+  height: auto;
   border-radius: 20px;
   object-fit: cover;
 }
 
 /* =========================
+   TABLETTE
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero {
+    padding: 36px 32px 56px;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .hero__content {
+    max-width: 50%;
+  }
+
+  .hero__tag {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+
+  .hero__title {
+    font-size: 34px;
+    line-height: 1.08;
+    margin-bottom: 16px;
+  }
+
+  .hero__description {
+    font-size: 11.5px;
+    margin-bottom: 18px;
+  }
+
+  .hero__button {
+    font-size: 11px;
+    padding: 6px 14px;
+  }
+
+  .hero__image {
+    width: 42%;
+  }
+
+  .hero__image img {
+    width: 100%;
+    border-radius: 18px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .hero {
+    padding: 32px 20px 50px; /* ⬅️ + d’air en bas */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px; /* ⬅️ + espace global */
+  }
+
+  .hero__tag {
+    font-size: 10px;
+    margin-bottom: 12px; /* ⬅️ + espace */
+  }
+
+  .hero__title {
+    font-size: 30px;
+    line-height: 1.05;
+    margin-bottom: 18px; /* ⬅️ + espace */
+  }
+
+  .hero__description {
+    font-size: 11px;
+    line-height: 1.5;
+    margin-bottom: 22px; /* ⬅️ + espace avant bouton */
+  }
+
+  .hero__button {
+    font-size: 10px;
+    padding: 6px 16px;
+    margin-bottom: 10px; /* ⬅️ espace avant image */
+  }
+
+  .hero__image {
+    width: 100%;
+    margin-top: 10px; /* ⬅️ espace image */
+  }
+
+  .hero__image img {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .hero__content {
+    max-width: 340px;
+  }
+}
+
+
+/* =========================
    MEET SECTION
 ========================= */
+
 .meet-section {
   background-color: #f7f5eb;
-  background-image: url("/pattern-test-1.png");
+  background-image: url("/pattern-test-2.jpg");
   background-repeat: repeat;
-  background-size: 120px;
   background-position: center;
-  padding: 80px 40px;
+  background-size: 240px auto;
+  padding: 80px 40px;  
 }
 
 .meet-section__content {
@@ -227,17 +448,65 @@ body {
   line-height: 1.15;
   color: #3c2015;
   margin: 0 auto;
-  max-width: 1120px;
+  max-width: 900px;
 }
 
+/* =========================
+   TABLETTE
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .meet-section {
+    padding: 60px 28px;
+    background-size: 240px auto;
+  }
+
+  .meet-section__tag {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .meet-section__title {
+    font-size: 34px;
+    line-height: 1.18;
+    max-width: 700px;
+  }
+}
 
 /* =========================
-   WORK SECTION
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .meet-section {
+    padding: 48px 20px;
+    background-size: 180px auto;
+  }
+
+  .meet-section__content {
+    max-width: 100%;
+  }
+
+  .meet-section__tag {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .meet-section__title {
+    font-size: 30px;
+    line-height: 1.12;
+    max-width: 100%;
+  }
+}
+
+/* =========================
+   WORK SECTION — DESKTOP PAR DÉFAUT
 ========================= */
 
 .work-section {
   background-color: #f7f5eb;
-  padding: 60px 0 40px;
+  padding: 60px 0 100px;
+  position: relative;
 }
 
 /* CONTENEUR GLOBAL */
@@ -257,7 +526,7 @@ body {
   padding: 0 20px;
 }
 
-/* BADGE CM */
+/* BADGE / LOGO */
 .work-section__badge {
   width: 92px;
   height: 92px;
@@ -270,9 +539,13 @@ body {
   align-items: center;
   justify-content: center;
 
-  font-family: "Cormorant Garamond", serif;
-  font-size: 40px;
-  font-weight: 600;
+  overflow: hidden;
+}
+
+.work-section__badge img {
+  width: 60%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* PETIT TEXTE */
@@ -327,11 +600,17 @@ body {
 }
 
 /* IMAGE */
-.work-card__image-placeholder {
+.work-card__image-placeholder,
+.work-card__image img {
   width: 100%;
-  height: 300px;
-  background-color: #e8e1d8;
+  height: auto;
+  display: block;
   margin-bottom: 16px;
+}
+
+.work-card__image-placeholder {
+  min-height: 300px;
+  background-color: #e8e1d8;
 }
 
 /* TITRE CARD */
@@ -377,6 +656,204 @@ body {
 }
 
 /* =========================
+   TABLETTE (CORRIGÉE PROPRE)
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .work-section {
+    padding: 50px 20px 30px;
+    padding-bottom: 80px;
+  }
+
+  .work-section__inner {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* =========================
+     CENTRE (PLUS AÉRÉ)
+  ========================= */
+
+  .work-section__center {
+    text-align: center;
+    padding: 0 10px;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .work-section__badge {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 16px;
+  }
+
+  .work-section__tag {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+
+  .work-section__title {
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  /* =========================
+     CARTES (PLUS PETITES)
+  ========================= */
+
+  .work-card {
+    width: 100%;
+    max-width: 260px; /* ✅ clé du problème */
+    padding: 12px 12px 18px;
+  }
+
+  .work-card--left {
+    transform: rotate(-4deg);
+    justify-self: end;
+  }
+
+  .work-card--right {
+    transform: rotate(4deg);
+    justify-self: start;
+  }
+
+  .work-card__image-placeholder {
+    min-height: 200px;
+  }
+
+  .work-card__title {
+    font-size: 18px;
+  }
+
+  .work-card__text {
+    font-size: 10px;
+    max-width: 200px;
+  }
+
+  .work-card__button {
+    font-size: 10px;
+    padding: 6px 14px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .work-section {
+    padding: 20px 0 0;
+        padding-bottom: 90px;
+
+  }
+
+  .work-section__inner {
+    margin: 0;
+    padding: 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .work-section__center {
+    order: 1;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .work-card--left {
+    order: 2;
+    justify-self: unset;
+    transform: rotate(-4deg);
+  }
+
+  .work-card--right {
+    order: 3;
+    justify-self: unset;
+    transform: rotate(-4deg);
+  }
+
+  .work-section__badge {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+  }
+
+  .work-section__badge img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .work-section__tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .work-section__title {
+    font-size: 30px;
+    line-height: 1.08;
+    white-space: nowrap; /* ✅ reste sur une ligne */
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  .work-card {
+    width: 100%;
+    max-width: 260px;
+    padding: 10px 10px 16px;
+    box-shadow: none;
+  }
+
+  .work-card__image-placeholder,
+  .work-card__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .work-card__image-placeholder {
+    min-height: 180px;
+  }
+
+  .work-card__title {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .work-card__text {
+    font-size: 8px;
+    line-height: 1.35;
+    max-width: 190px;
+    margin: 0 auto 10px;
+  }
+
+  .work-card__button {
+    font-size: 9px;
+    padding: 6px 12px;
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px) rotate(0deg);
+  }
+
+  /* ✅ vague rose supprimée */
+  .work-section::after {
+    content: none;
+  }
+}
+
+/* =========================
    BRANDS SECTION
 ========================= */
 
@@ -385,22 +862,6 @@ body {
   background-color: #fcc5df;
   padding: 80px 0 50px;
   overflow: hidden;
-}
-
-/* =========================
-   VAGUES EN HAUT
-========================= */
-
-.brands-section::before {
-  content: "";
-  position: absolute;
-  top: -25px;
-  left: 0;
-  width: 100%;
-  height: 50px;
-
-  background: radial-gradient(circle at 25px 25px, #f7f5eb 25px, transparent 26px);
-  background-size: 50px 50px;
 }
 
 /* =========================
@@ -413,12 +874,11 @@ body {
   font-size: 12px;
   letter-spacing: 1px;
   color: #3c2015;
-
   margin-bottom: 40px;
 }
 
 /* =========================
-   WRAPPER SCROLL
+   SLIDER
 ========================= */
 
 .brands-section__slider {
@@ -426,7 +886,7 @@ body {
   width: 100%;
 }
 
-/* TRACK QUI BOUGE */
+/* TRACK (défilement) */
 .brands-section__track {
   display: flex;
   align-items: center;
@@ -443,7 +903,9 @@ body {
 
 .brands-section__logo {
   height: 40px;
+  width: auto;
   object-fit: contain;
+
   opacity: 0.9;
   transition: opacity 0.2s ease;
 }
@@ -453,7 +915,7 @@ body {
 }
 
 /* =========================
-   ANIMATION SCROLL
+   ANIMATION
 ========================= */
 
 @keyframes scrollBrands {
@@ -466,7 +928,57 @@ body {
 }
 
 /* =========================
-   ABOUT SECTION
+   TABLETTE
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .brands-section {
+    padding: 60px 0 40px;
+  }
+
+  .brands-section__title {
+    font-size: 11px;
+    margin-bottom: 30px;
+  }
+
+  .brands-section__track {
+    gap: 50px;
+    animation-duration: 18s;
+  }
+
+  .brands-section__logo {
+    height: 32px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .brands-section {
+    padding: 50px 0 30px;
+  }
+
+  .brands-section__title {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    margin-bottom: 20px;
+    padding: 0 16px;
+  }
+
+  .brands-section__track {
+    gap: 32px;
+    animation-duration: 16s;
+  }
+
+  .brands-section__logo {
+    height: 24px;
+  }
+}
+
+/* =========================
+   ABOUT SECTION — DESKTOP PAR DÉFAUT
 ========================= */
 
 .about-section {
@@ -491,7 +1003,7 @@ body {
   height: auto;
   display: block;
 
-  /* FORMES SCALLOP */
+  /* version simple pour l’instant */
   border-radius: 60px;
 }
 
@@ -504,17 +1016,19 @@ body {
 .about-section__title {
   font-family: "Cormorant Garamond", serif;
   font-size: 48px;
+  line-height: 1.05;
   color: #f7f5eb;
   margin-bottom: 10px;
 }
 
-/* SOUS TITRE */
+/* SOUS-TITRE */
 .about-section__subtitle {
   font-family: "Public Sans", sans-serif;
   font-size: 12px;
   letter-spacing: 1px;
   color: #f7f5eb;
   margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 /* TEXTE */
@@ -537,7 +1051,7 @@ body {
   font-size: 12px;
   font-family: "Public Sans", sans-serif;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .about-section__button:hover {
@@ -545,7 +1059,122 @@ body {
 }
 
 /* =========================
-   FOOTER SECTION
+   TABLETTE
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .about-section {
+    padding: 56px 32px;
+  }
+
+  .about-section__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 36px;
+  }
+
+  .about-section__image {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .about-section__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 44px;
+  }
+
+  .about-section__content {
+    max-width: 100%;
+  }
+
+  .about-section__title {
+    font-size: 40px;
+    line-height: 1.05;
+    margin-bottom: 10px;
+  }
+
+  .about-section__subtitle {
+    font-size: 11px;
+    margin-bottom: 18px;
+  }
+
+  .about-section__text {
+    font-size: 12px;
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+
+  .about-section__button {
+    margin-top: 8px;
+    font-size: 11px;
+    padding: 8px 16px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .about-section {
+    padding: 40px 20px 48px;
+  }
+
+  .about-section__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .about-section__image {
+    width: 100%;
+  }
+
+  .about-section__image img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 36px;
+  }
+
+  .about-section__content {
+    max-width: 100%;
+  }
+
+  .about-section__title {
+    font-size: 28px;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+
+  .about-section__subtitle {
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .about-section__text {
+    font-size: 10px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .about-section__button {
+    margin-top: 6px;
+    font-size: 10px;
+    padding: 7px 14px;
+    border-radius: 999px;
+  }
+}
+
+/* =========================
+   FOOTER SECTION — DESKTOP
 ========================= */
 
 .footer-section {
@@ -602,6 +1231,7 @@ body {
   font-size: 12px;
   letter-spacing: 1px;
   color: #3c2015;
+  text-transform: uppercase;
   transition: opacity 0.2s ease;
 }
 
@@ -630,23 +1260,116 @@ body {
   text-transform: uppercase;
 }
 
-.footer-section__bottom {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+/* =========================
+   TABLETTE
+========================= */
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  .footer-section {
+    padding: 32px 24px 0;
+  }
+
+  .footer-section__top {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 28px;
+    margin-bottom: 20px;
+  }
+
+  .footer-section__column {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section__column--left,
+  .footer-section__column--right {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section__heading {
+    font-size: 20px;
+  }
+
+  .footer-section__column a {
+    font-size: 11px;
+  }
+
+  .footer-section__logo {
+    font-size: 88px;
+  }
+
+  .footer-section__big-name {
+    font-size: 100px;
+    line-height: 0.95;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .footer-section {
+    padding: 30px 20px 0;
+  }
+
+  .footer-section__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 18px;
+  }
+
+  .footer-section__column {
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .footer-section__column--left,
+  .footer-section__column--right {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-section__heading {
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
+  .footer-section__column a {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .footer-section__logo {
+    font-size: 72px;
+    line-height: 1;
+  }
+
+  .footer-section__big-name {
+    display: none;
+  }
+}
+
+/* =========================
+   BOTTOM BAR
+========================= */
+
+.bottom-bar {
+  width: 100%;
   background-color: #bfd2ef;
+  padding: 5px 40px;
+  min-height: 33px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  padding: 5px 40px;
-  min-height: 33px;
-  margin-top: 0;
-  overflow-x: auto;
 }
 
-.footer-section__bottom-inner {
+.bottom-bar__inner {
   width: 100%;
   max-width: 1127px;
 
@@ -656,7 +1379,7 @@ body {
   gap: 16px;
 }
 
-.footer-section__bottom a {
+.bottom-bar a {
   text-decoration: none;
   font-family: "Public Sans", sans-serif;
   font-size: 10px;
@@ -668,6 +1391,53 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.footer-section__bottom a:hover {
+.bottom-bar a:hover {
   opacity: 0.7;
+}
+
+/* =========================
+   TABLETTE
+========================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bottom-bar {
+    padding: 10px 20px;
+    min-height: auto;
+  }
+
+  .bottom-bar__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px 24px;
+  }
+
+  .bottom-bar a {
+    font-size: 10px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
+  .bottom-bar {
+    padding: 12px 16px;
+    min-height: auto;
+  }
+
+  .bottom-bar__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .bottom-bar a {
+    font-size: 9px;
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal;
+  }
 }

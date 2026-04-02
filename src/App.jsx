@@ -6,6 +6,8 @@ import WorkSection from "./components/WorkSection";
 import BrandsSection from "./components/BrandsSection";
 import AboutSection from "./components/AboutSection";
 import FooterSection from "./components/FooterSection";
+import BottomBar from "./components/BottomBar";
+
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <BrandsSection />
       <AboutSection />
       <FooterSection />
+      <BottomBar />
+
     </div>
   );
 }
